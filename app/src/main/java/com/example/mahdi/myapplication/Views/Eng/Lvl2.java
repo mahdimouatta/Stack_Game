@@ -116,6 +116,8 @@ public class Lvl2 extends Screen {
 
 
                 if (well_placed()==1) {
+                    if ( Eng.tryangain1.isPlaying()) Eng.tryangain1.pause();
+
                     Eng.bien1.start();
                     boxDyn1.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn1.setDragged(false);
@@ -154,6 +156,7 @@ public class Lvl2 extends Screen {
             accBox = boxDyn2;
             if (boxDyn2.isDragged()){
                 if (well_placed()== 2) {
+                    if ( Eng.tryangain2.isPlaying()) Eng.tryangain2.pause();
                     Eng.bien2.start();
 
                     boxDyn2.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
@@ -187,6 +190,7 @@ public class Lvl2 extends Screen {
             accBox = boxDyn3;
             if (boxDyn3.isDragged()) {
                 if (well_placed() == 3) {
+                    if ( Eng.proche.isPlaying()) Eng.proche.pause();
                     Eng.aplaude.start();
 
                     boxDyn3.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
