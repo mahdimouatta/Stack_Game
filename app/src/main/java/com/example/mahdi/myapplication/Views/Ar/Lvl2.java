@@ -51,6 +51,10 @@ public class Lvl2 extends Screen {
     int sound = 0;
     private Timer timer;
 
+    private String lvl = "Ar: Lvl1";
+    private int succ=0;
+    private int fail=0;
+
 
 
 
@@ -121,6 +125,7 @@ public class Lvl2 extends Screen {
                 accBox = boxDyn1;
 
                 if (well_placed()==1) {
+                    succ++;
                     if ( Ar.tryangain1.isPlaying()) Ar.tryangain1.pause();
                     Ar.bien1.start();
                     boxDyn1.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
@@ -142,6 +147,7 @@ public class Lvl2 extends Screen {
                 }else {
                     if (sound != 1) {
                         Ar.tryangain1.start();
+                        fail++;
                         sound = 1;
                     }
                 }
@@ -162,6 +168,7 @@ public class Lvl2 extends Screen {
             accBox = boxDyn2;
             if (boxDyn2.isDragged()){
                 if (well_placed()== 2) {
+                    succ++;
                     if ( Ar.tryangain2.isPlaying()) Ar.tryangain2.pause();
                     Ar.bien2.start();
 
@@ -182,6 +189,7 @@ public class Lvl2 extends Screen {
                 }else {
                     if (sound != 1) {
                         Ar.tryangain2.start();
+                        fail++;
                         sound = 1;
                     }
                 }
@@ -200,6 +208,7 @@ public class Lvl2 extends Screen {
             if (boxDyn3.isDragged()) {
 
                 if (well_placed() == 3) {
+                    succ++;
                     if ( Ar.proche.isPlaying()) Ar.proche.pause();
                     Ar.aplaude.start();
 
@@ -220,6 +229,7 @@ public class Lvl2 extends Screen {
                 }else {
                     if (sound != 1) {
                         Ar.proche.start();
+                        fail++;
                         sound = 1;
                     }
                 }
@@ -263,6 +273,7 @@ public class Lvl2 extends Screen {
             //                Screen s = new Lvl2(game);
             //                new MainAppActivity().getInitScreen(s);
             if(help_t!=1) {
+                saveState((Context)game ,lvl,succ,fail);
                 game.setScreen(new Levels(game));
                 help_t=1;
             }
@@ -326,11 +337,12 @@ public class Lvl2 extends Screen {
     @Override
     public void backButton() {
         game.setScreen(new Levels(game));
+        saveState((Context)game ,lvl,succ,fail);
 
     }
     @Override
     public void dispose() {
-        //saveState((Context)game ,"AR_",1,3);
+        saveState((Context)game ,lvl,succ,fail);
         super.dispose();
 
     }

@@ -1,5 +1,6 @@
 package com.example.mahdi.myapplication.Views.Eng;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.emobadaragaminglib.Base.Game;
@@ -19,6 +20,8 @@ import com.example.mahdi.myapplication.assets.Success;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.example.mahdi.myapplication.MainAppActivity.saveState;
 
 public class Lvl2 extends Screen {
 
@@ -46,6 +49,10 @@ public class Lvl2 extends Screen {
     private ButtonUI repeat;
     private int sound = 0;
     private Timer timer;
+
+    private String lvl = "ENG: Lvl1";
+    private int succ=0;
+    private int fail=0;
 
 
 
@@ -116,6 +123,7 @@ public class Lvl2 extends Screen {
 
 
                 if (well_placed()==1) {
+                    succ++;
                     if ( Eng.tryangain1.isPlaying()) Eng.tryangain1.pause();
 
                     Eng.bien1.start();
@@ -136,6 +144,7 @@ public class Lvl2 extends Screen {
 
                 }else {
                     if (sound != 1) {
+                        fail++;
                         Eng.tryangain1.start();
                         sound = 1;
                     }
@@ -155,6 +164,7 @@ public class Lvl2 extends Screen {
         }else if ( nbrEssaies ==2){ // placement du 2e box
             accBox = boxDyn2;
             if (boxDyn2.isDragged()){
+                succ++;
                 if (well_placed()== 2) {
                     if ( Eng.tryangain2.isPlaying()) Eng.tryangain2.pause();
                     Eng.bien2.start();
@@ -175,6 +185,7 @@ public class Lvl2 extends Screen {
 
                 }else {
                     if (sound != 1) {
+                        fail++;
                         Eng.tryangain2.start();
                         sound = 1;
                     }
@@ -189,6 +200,7 @@ public class Lvl2 extends Screen {
         }else if ( nbrEssaies ==3){ //placement du 3e box
             accBox = boxDyn3;
             if (boxDyn3.isDragged()) {
+                succ++;
                 if (well_placed() == 3) {
                     if ( Eng.proche.isPlaying()) Eng.proche.pause();
                     Eng.aplaude.start();
@@ -209,6 +221,7 @@ public class Lvl2 extends Screen {
 
                 }else {
                     if (sound != 1) {
+                        fail++;
                         Eng.proche.start();
                         sound = 1;
                     }
@@ -238,6 +251,7 @@ public class Lvl2 extends Screen {
             //                Screen s = new Lvl2(game);
             //                new MainAppActivity().getInitScreen(s);
             if(help_t!=1) {
+                saveState((Context)game ,lvl,succ,fail);
                 game.setScreen(new Levels(game));
                 help_t=1;
             }
@@ -301,11 +315,13 @@ public class Lvl2 extends Screen {
 
     @Override
     public void backButton() {
+        saveState((Context)game ,lvl,succ,fail);
         game.setScreen(new Levels(game));
 
     }
     @Override
     public void dispose() {
+        saveState((Context)game ,lvl,succ,fail);
         super.dispose();
 
     }
