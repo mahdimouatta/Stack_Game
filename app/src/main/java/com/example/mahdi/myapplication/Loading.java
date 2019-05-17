@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.e_mobadara.audiomanaging.AudioSettingsActivity;
+import com.example.ensias_auth_library.FoxyAuth;
 
 public class Loading extends AppCompatActivity {
 
@@ -13,12 +14,17 @@ public class Loading extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+
+        FoxyAuth.emerge(this,MainAppActivity.class);
     }
+
+
 
     public void OpensettingsActivity(View view) {
         Intent i = new Intent(this, AudioSettingsActivity.class);
         startActivity(i);
     }
+
 
     public void playGame(View view) {
         Intent i = new Intent(this, MainAppActivity.class);

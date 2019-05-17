@@ -116,12 +116,12 @@ public class Lvl2 extends Screen {
             if ( boxDyn1.isDragged()) {
 
                 if (well_placed()==1) {
-                    Fr.bien1.play(1);
+                    Fr.bien1.start();
                     boxDyn1.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn1.setDragged(false);
 
                     Log.d("wp1", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl1 = new BoxEmpl(game,Box.avatar,50,graphics.getHeight() - 200  ,200,200);
 
 
@@ -134,7 +134,7 @@ public class Lvl2 extends Screen {
 
                 }else {
                     if (sound != 1) {
-                        Fr.tryangain1.play(1);
+                        Fr.tryangain1.start();
                         sound = 1;
                     }
                 }
@@ -142,7 +142,7 @@ public class Lvl2 extends Screen {
                 boxDyn1.setY(graphics.getHeight() - 200);
                 sound = 0;
 //                if(sound != 1) {
-//                    Eng.tryangain1.play(1);
+//                    Eng.tryangain1.start();
 //                    sound = 1;
 //                }
             }
@@ -154,12 +154,12 @@ public class Lvl2 extends Screen {
             accBox = boxDyn2;
             if (boxDyn2.isDragged()){
                 if (well_placed()== 2) {
-                    Fr.bien2.play(1);
+                    Fr.bien2.start();
 
                     boxDyn2.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn2.setDragged(false);
                     Log.d("wp2", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl2 = new BoxEmpl(game,Box.avatar,50,graphics.getHeight() - 380,200,200);
 
                     addSprite(boxEmpl2);
@@ -172,7 +172,7 @@ public class Lvl2 extends Screen {
 
                 }else {
                     if (sound != 1) {
-                        Fr.tryangain2.play(1);
+                        Fr.tryangain2.start();
                         sound = 1;
                     }
                 }
@@ -180,7 +180,7 @@ public class Lvl2 extends Screen {
                 boxDyn2.setY(graphics.getHeight() - 200);
                 sound = 0;
 //                if(sound != 1) {
-//                    Eng.tryangain1.play(1);
+//                    Eng.tryangain1.start();
 //                    sound = 1;
 //                }
             }
@@ -190,13 +190,13 @@ public class Lvl2 extends Screen {
             accBox = boxDyn3;
             if (boxDyn3.isDragged()) {
                 if (well_placed() == 3) {
-                    Fr.aplaude.play(1);
+                    Fr.aplaude.start();
 
                     boxDyn3.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn3.setDragged(false);
 
                     Log.d("wp3", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl3 = new BoxEmpl(game,Box.avatar,50,graphics.getHeight() - 560,200,200);
 
 
@@ -208,7 +208,7 @@ public class Lvl2 extends Screen {
 
                 }else {
                     if (sound != 1) {
-                        Fr.proche.play(1);
+                        Fr.proche.start();
                         sound = 1;
                     }
                 }
@@ -216,7 +216,7 @@ public class Lvl2 extends Screen {
                 boxDyn3.setY(graphics.getHeight() - 200);
                 sound = 0;
 //                if(sound != 1) {
-//                    Eng.tryangain1.play(1);
+//                    Eng.tryangain1.start();
 //                    sound = 1;
 //                }
             }
@@ -252,7 +252,7 @@ public class Lvl2 extends Screen {
             //                new MainAppActivity().getInitScreen(s);
             if(help_t!=1) {
                 hand.setX(accBox.getX() +30);
-                Fr.helpsound.play(1);
+                Fr.helpsound.start();
                 addSprite(hand);
                 help_t = 1;
 

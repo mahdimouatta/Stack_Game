@@ -1,13 +1,21 @@
 package com.example.mahdi.myapplication;
 
+import android.arch.core.util.Function;
+import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 
+import com.e_mobadara.audiomanaging.MainActivity;
 import com.e_mobadara.audiomanaging.moblibAudioFileManager;
+import com.example.emobadaragaminglib.Base.Game;
 import com.example.emobadaragaminglib.Base.Graphics;
 import com.example.emobadaragaminglib.Base.Screen;
 import com.example.emobadaragaminglib.Implementation.AndroidGame;
 import com.example.emobadaragaminglib.Implementation.AndroidSound;
+import com.example.ensias_auth_library.FoxyAuth;
+import com.example.ensias_auth_library.models.GameStat;
 import com.example.mahdi.myapplication.assets.Ar;
 import com.example.mahdi.myapplication.assets.BG;
 import com.example.mahdi.myapplication.assets.Box;
@@ -17,11 +25,43 @@ import com.example.mahdi.myapplication.assets.Eng;
 import com.example.mahdi.myapplication.assets.Fr;
 import com.example.mahdi.myapplication.assets.Success;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainAppActivity extends AndroidGame {
 
     public static MediaPlayer Losingsound;
     public static MediaPlayer Winningsound;
+    public static int waiting = 3000;
 
+    public static void saveState(Context context,String lvl, int succ, int fail){
+        GameStat gameStat = new GameStat();
+
+        String application_id = "2019_3_2_3";
+        gameStat.setApp_id(application_id);
+
+        String exercice_id = "T_5_1";
+        gameStat.setExercise_id(exercice_id);
+
+        gameStat.setLevel_id(lvl);
+
+        gameStat.setSuccessful_attempts(String.valueOf(succ));
+
+        gameStat.setFailed_attempts(String.valueOf(fail));
+        FoxyAuth.storeGameStat(context,gameStat);
+
+    }
+
+    public static void help(final TimerTask task){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                task.run();
+            }
+        },waiting);
+
+    }
     @Override
     public Screen getInitScreen() {
 
@@ -71,14 +111,22 @@ public class MainAppActivity extends AndroidGame {
         Ar.lvl1 = getGraphics().newImage(R.mipmap.lvl1icon,Graphics.ImageFormat.ARGB8888,getResources());
         Ar.lvl2 = getGraphics().newImage(R.mipmap.lvl2icon,Graphics.ImageFormat.ARGB8888,getResources());
         Ar.retour = getGraphics().newImage(R.mipmap.retour,Graphics.ImageFormat.ARGB8888,getResources());
-        Ar.helpsound = (AndroidSound)getAudio().createSound(R.raw.yasmine);
-        Ar.aplaude = (AndroidSound)getAudio().createSound(R.raw.applaud);
-        Ar.proche = (AndroidSound)getAudio().createSound(R.raw.prochear);
-        Ar.tryangain1 = (AndroidSound)getAudio().createSound(R.raw.soundar2);
-        Ar.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.essayear);
-        Ar.bien1 = (AndroidSound)getAudio().createSound(R.raw.sonar);
-        Ar.bien2 = (AndroidSound)getAudio().createSound(R.raw.sonar2);
-        Ar.bien3 = (AndroidSound)getAudio().createSound(R.raw.son3ar);
+
+        Ar.helpsound = MediaPlayer.create(this,R.raw.yasmine);
+        Ar.aplaude = moblibAudioFileManager.getRandomAudioFile(this,"excellent","AR");
+        if(Ar.aplaude==null) Ar.aplaude = MediaPlayer.create(this,R.raw.applaud);
+        Ar.proche = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","AR");
+        if(Ar.proche==null) Ar.proche = MediaPlayer.create(this,R.raw.prochear);
+        Ar.tryangain1 = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","AR");
+        if(Ar.tryangain1==null) Ar.tryangain1 = MediaPlayer.create(this,R.raw.soundar2);
+        Ar.tryangain2 = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","AR");
+        if(Ar.tryangain2==null) Ar.tryangain2 = MediaPlayer.create(this,R.raw.essayear);
+        Ar.bien1 = moblibAudioFileManager.getRandomAudioFile(this,"good","AR");
+        if(Ar.bien1==null) Ar.bien1 = MediaPlayer.create(this,R.raw.sonar);
+        Ar.bien2 = moblibAudioFileManager.getRandomAudioFile(this,"good","AR");
+        if(Ar.bien2==null) Ar.bien2 = MediaPlayer.create(this,R.raw.sonar2);
+        Ar.bien3 = moblibAudioFileManager.getRandomAudioFile(this,"good","AR");
+        if(Ar.bien3==null) Ar.bien3 = MediaPlayer.create(this,R.raw.son3ar);
 
 
 
@@ -89,14 +137,21 @@ public class MainAppActivity extends AndroidGame {
         Fr.lvl1 = getGraphics().newImage(R.mipmap.lvl1icon,Graphics.ImageFormat.ARGB8888,getResources());
         Fr.lvl2 = getGraphics().newImage(R.mipmap.lvl2icon,Graphics.ImageFormat.ARGB8888,getResources());
         Fr.retour = getGraphics().newImage(R.mipmap.retour,Graphics.ImageFormat.ARGB8888,getResources());
-        Fr.helpsound = (AndroidSound)getAudio().createSound(R.raw.helpf);
-        Fr.aplaude = (AndroidSound)getAudio().createSound(R.raw.applaud);
-        Fr.proche = (AndroidSound)getAudio().createSound(R.raw.proche);
-        Fr.tryangain1 = (AndroidSound)getAudio().createSound(R.raw.essayerencore);
-        Fr.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.proche);
-        Fr.bien1 = (AndroidSound)getAudio().createSound(R.raw.son1fr);
-        Fr.bien2 = (AndroidSound)getAudio().createSound(R.raw.son2fr);
-        Fr.bien3 = (AndroidSound)getAudio().createSound(R.raw.son3fr);
+        Fr.helpsound = MediaPlayer.create(this,R.raw.helpf);
+        Fr.aplaude = moblibAudioFileManager.getRandomAudioFile(this,"excellent","FR");
+        if(Fr.aplaude==null) Fr.aplaude = MediaPlayer.create(this,R.raw.applaud);
+        Fr.proche = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","FR");
+        if(Fr.proche==null) Fr.proche = MediaPlayer.create(this,R.raw.proche);
+        Fr.tryangain1 = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","FR");
+        if(Fr.tryangain1==null) Fr.tryangain1 = MediaPlayer.create(this,R.raw.essayerencore);
+        Fr.tryangain2 = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","FR");
+        if(Fr.tryangain2==null) Fr.tryangain2 = MediaPlayer.create(this,R.raw.proche);
+        Fr.bien1 = moblibAudioFileManager.getRandomAudioFile(this,"good","FR");
+        if(Fr.bien1==null) Fr.bien1 = MediaPlayer.create(this,R.raw.son1fr);
+        Fr.bien2 = moblibAudioFileManager.getRandomAudioFile(this,"good","FR");
+        if(Fr.bien2==null) Fr.bien2 = MediaPlayer.create(this,R.raw.son2fr);
+        Fr.bien3 = moblibAudioFileManager.getRandomAudioFile(this,"good","FR");
+        if(Fr.bien3==null) Fr.bien3 = MediaPlayer.create(this,R.raw.son3fr);
 
 
 
@@ -108,14 +163,21 @@ public class MainAppActivity extends AndroidGame {
         Eng.lvls = getGraphics().newImage(R.mipmap.lvlseng,Graphics.ImageFormat.ARGB8888,getResources());
 
         Eng.retour = getGraphics().newImage(R.mipmap.retour,Graphics.ImageFormat.ARGB8888,getResources());
-        Eng.helpsound = (AndroidSound)getAudio().createSound(R.raw.helpan);
-        Eng.aplaude = (AndroidSound)getAudio().createSound(R.raw.applaud);
-        Eng.proche = (AndroidSound)getAudio().createSound(R.raw.urclose);
-        Eng.tryangain1 = (AndroidSound)getAudio().createSound(R.raw.tryagain);
-        Eng.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.urclose);
-        Eng.bien1 = (AndroidSound)getAudio().createSound(R.raw.son1ang);
-        Eng.bien2 = (AndroidSound)getAudio().createSound(R.raw.son2ang);
-        Eng.bien3 = (AndroidSound)getAudio().createSound(R.raw.son3ang);
+        Eng.helpsound = MediaPlayer.create(this,R.raw.helpan);
+        Eng.aplaude = moblibAudioFileManager.getRandomAudioFile(this,"excellent","AN");
+        Eng.aplaude = MediaPlayer.create(this,R.raw.applaud);
+        Eng.proche = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","AN");
+        Eng.proche = MediaPlayer.create(this,R.raw.urclose);
+        Eng.tryangain1 = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","AN");
+        Eng.tryangain1 = MediaPlayer.create(this,R.raw.tryagain);
+        Eng.tryangain2 = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","AN");
+        Eng.tryangain2 = MediaPlayer.create(this,R.raw.urclose);
+        Eng.bien1 = moblibAudioFileManager.getRandomAudioFile(this,"good","AN");
+        Eng.bien1 = MediaPlayer.create(this,R.raw.son1ang);
+        Eng.bien2 = moblibAudioFileManager.getRandomAudioFile(this,"good","AN");
+        Eng.bien2 = MediaPlayer.create(this,R.raw.son2ang);
+        Eng.bien3 = moblibAudioFileManager.getRandomAudioFile(this,"good","AN");
+        Eng.bien3 = MediaPlayer.create(this,R.raw.son3ang);
 
 
 
@@ -126,7 +188,7 @@ public class MainAppActivity extends AndroidGame {
         // help
 
         Btn.help = getGraphics().newImage(R.mipmap.help,Graphics.ImageFormat.ARGB8888,getResources());
-        Btn.helpsound=(AndroidSound)getAudio().createSound(R.raw.yasmine);
+        Btn.helpsound = MediaPlayer.create(this,R.raw.yasmine);
 
 
         BG.welcomebg = getGraphics().newImage(R.mipmap.welcomebg,Graphics.ImageFormat.ARGB8888,getResources());
@@ -147,7 +209,6 @@ public class MainAppActivity extends AndroidGame {
         return new GameScreen(this);
 
     }
-
 
 
 

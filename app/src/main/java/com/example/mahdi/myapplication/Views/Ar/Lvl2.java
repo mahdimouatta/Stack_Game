@@ -1,5 +1,6 @@
 package com.example.mahdi.myapplication.Views.Ar;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.emobadaragaminglib.Base.Game;
@@ -7,6 +8,9 @@ import com.example.emobadaragaminglib.Base.Graphics;
 import com.example.emobadaragaminglib.Base.Screen;
 import com.example.emobadaragaminglib.Components.ButtonUI;
 import com.example.emobadaragaminglib.Components.Sprite;
+import com.example.ensias_auth_library.FoxyAuth;
+import com.example.ensias_auth_library.models.GameStat;
+import com.example.mahdi.myapplication.MainAppActivity;
 import com.example.mahdi.myapplication.Sprites.BoxDyn;
 import com.example.mahdi.myapplication.Sprites.BoxEmpl;
 import com.example.mahdi.myapplication.assets.Ar;
@@ -18,6 +22,8 @@ import com.example.mahdi.myapplication.assets.Success;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.example.mahdi.myapplication.MainAppActivity.saveState;
 
 public class Lvl2 extends Screen {
 
@@ -109,17 +115,19 @@ public class Lvl2 extends Screen {
         Sprite draggable= boxDyn1;
 
 
+
         if ( nbrEssaies ==1) { // placement du 1er box
             if ( boxDyn1.isDragged()) {
                 accBox = boxDyn1;
 
                 if (well_placed()==1) {
-                    Ar.bien1.play(1);
+                    if ( Ar.tryangain1.isPlaying()) Ar.tryangain1.pause();
+                    Ar.bien1.start();
                     boxDyn1.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn1.setDragged(false);
 
                     Log.d("wp1", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl1 = new BoxEmpl(game,Box.avatar,50,graphics.getHeight() - 200  ,200,200);
 
 
@@ -130,9 +138,10 @@ public class Lvl2 extends Screen {
                     sound = 1;
 
 
+
                 }else {
                     if (sound != 1) {
-                        Ar.tryangain1.play(1);
+                        Ar.tryangain1.start();
                         sound = 1;
                     }
                 }
@@ -140,7 +149,7 @@ public class Lvl2 extends Screen {
                 boxDyn1.setY(graphics.getHeight() - 200);
                 sound = 0;
 //                if(sound != 1) {
-//                    Eng.tryangain1.play(1);
+//                    Eng.tryangain1.start();
 //                    sound = 1;
 //                }
             }
@@ -149,15 +158,17 @@ public class Lvl2 extends Screen {
 
 
         }else if ( nbrEssaies ==2){ // placement du 2e box
+
             accBox = boxDyn2;
             if (boxDyn2.isDragged()){
                 if (well_placed()== 2) {
-                    Ar.bien2.play(1);
+                    if ( Ar.tryangain2.isPlaying()) Ar.tryangain2.pause();
+                    Ar.bien2.start();
 
                     boxDyn2.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn2.setDragged(false);
                     Log.d("wp2", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl2 = new BoxEmpl(game,Box.avatar,50,graphics.getHeight() - 380,200,200);
 
                     addSprite(boxEmpl2);
@@ -170,7 +181,7 @@ public class Lvl2 extends Screen {
 
                 }else {
                     if (sound != 1) {
-                        Ar.tryangain2.play(1);
+                        Ar.tryangain2.start();
                         sound = 1;
                     }
                 }
@@ -178,7 +189,7 @@ public class Lvl2 extends Screen {
                 boxDyn2.setY(graphics.getHeight() - 200);
                 sound = 0;
 //                if(sound != 1) {
-//                    Eng.tryangain1.play(1);
+//                    Eng.tryangain1.start();
 //                    sound = 1;
 //                }
             }
@@ -189,13 +200,14 @@ public class Lvl2 extends Screen {
             if (boxDyn3.isDragged()) {
 
                 if (well_placed() == 3) {
-                    Ar.aplaude.play(1);
+                    if ( Ar.proche.isPlaying()) Ar.proche.pause();
+                    Ar.aplaude.start();
 
                     boxDyn3.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn3.setDragged(false);
 
                     Log.d("wp3", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl3 = new BoxEmpl(game,Box.avatar,50,graphics.getHeight() - 560,200,200);
 
 
@@ -207,7 +219,7 @@ public class Lvl2 extends Screen {
 
                 }else {
                     if (sound != 1) {
-                        Ar.proche.play(1);
+                        Ar.proche.start();
                         sound = 1;
                     }
                 }
@@ -215,7 +227,7 @@ public class Lvl2 extends Screen {
                 boxDyn3.setY(graphics.getHeight() - 200);
                 sound = 0;
 //                if(sound != 1) {
-//                    Eng.tryangain1.play(1);
+//                    Eng.tryangain1.start();
 //                    sound = 1;
 //                }
             }
@@ -225,6 +237,7 @@ public class Lvl2 extends Screen {
 
         if (nbrEssaies == 4){
             boxDyn3.setStatic(true);
+
 
 //            addSprite(success);
 //            addSprite(buttonUI);
@@ -261,7 +274,7 @@ public class Lvl2 extends Screen {
             //                new MainAppActivity().getInitScreen(s);
             if(help_t!=1) {
                 hand.setX(accBox.getX()+30);
-                Ar.helpsound.play(1);
+                Ar.helpsound.start();
                 addSprite(hand);
                 help_t = 1;
 
@@ -317,6 +330,7 @@ public class Lvl2 extends Screen {
     }
     @Override
     public void dispose() {
+        //saveState((Context)game ,"AR_",1,3);
         super.dispose();
 
     }

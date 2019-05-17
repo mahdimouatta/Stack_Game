@@ -114,12 +114,12 @@ public class lvl3 extends Screen {
             if ( boxDyn1.isDragged()) {
 
                 if (well_placed()==1) {
-                    Eng.bien1.play(1);
+                    Eng.bien1.start();
                     boxDyn1.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn1.setDragged(false);
 
                     Log.d("wp1", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl1 = new BoxEmpl(game,Box.bot,50,graphics.getHeight() - 270  ,200,200);
 
 
@@ -132,7 +132,7 @@ public class lvl3 extends Screen {
 
                 }else {
                     if (sound != 1) {
-                        Eng.tryangain1.play(1);
+                        Eng.tryangain1.start();
                         sound = 1;
                     }
                 }
@@ -149,12 +149,12 @@ public class lvl3 extends Screen {
             accBox = boxDyn2;
             if (boxDyn2.isDragged()){
                 if (well_placed()== 2) {
-                    Eng.bien2.play(1);
+                    Eng.bien2.start();
 
                     boxDyn2.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn2.setDragged(false);
                     Log.d("wp2", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl2 = new BoxEmpl(game,Box.mid,50,graphics.getHeight() - 450,200,200);
 
                     addSprite(boxEmpl2);
@@ -167,7 +167,7 @@ public class lvl3 extends Screen {
 
                 }else {
                     if (sound != 1) {
-                        Eng.tryangain2.play(1);
+                        Eng.tryangain2.start();
                         sound = 1;
                     }
                 }
@@ -182,12 +182,12 @@ public class lvl3 extends Screen {
             accBox = boxDyn3;
             if (boxDyn3.isDragged()) {
                 if (well_placed() == 3) {
-                    Eng.aplaude.play(1);
+                    Eng.aplaude.start();
                     boxDyn3.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn3.setDragged(false);
 
                     Log.d("wp3", "wp");
-                    //Box.voice.play(1);
+                    //Box.voice.start();
                     boxEmpl3 = new BoxEmpl(game,Box.top,50,graphics.getHeight() - 630,200,200);
 
 
@@ -199,7 +199,7 @@ public class lvl3 extends Screen {
 
                 }else {
                     if (sound != 1) {
-                        Eng.proche.play(1);
+                        Eng.proche.start();
                         sound = 1;
                     }
                 }
@@ -252,7 +252,7 @@ public class lvl3 extends Screen {
 
             if(help_t!=1) {
                 hand.setX(accBox.getX()+30);
-                Eng.helpsound.play(1);
+                Eng.helpsound.start();
                 addSprite(hand);
                 help_t = 1;
 

@@ -1,7 +1,8 @@
 package com.example.mahdi.myapplication.assets;
 
+import android.media.MediaPlayer;
+
 import com.example.emobadaragaminglib.Base.Image;
-import com.example.emobadaragaminglib.Implementation.AndroidSound;
 
 public class Fr {
     public static Image langue;
@@ -14,13 +15,13 @@ public class Fr {
     public static Image retour;
 
 
-    public static AndroidSound helpsound;
-    public static AndroidSound aplaude;
-    public static AndroidSound bien1;
-    public static AndroidSound bien2;
-    public static AndroidSound bien3;
-    public static AndroidSound tryangain1;
-    public static AndroidSound tryangain2;
-    public static AndroidSound proche;
+    public static MediaPlayer helpsound;
+    public static MediaPlayer aplaude;
+    public static MediaPlayer bien1;
+    public static MediaPlayer bien2;
+    public static MediaPlayer bien3;
+    public static MediaPlayer tryangain1;
+    public static MediaPlayer tryangain2;
+    public static MediaPlayer proche;
 
 }
