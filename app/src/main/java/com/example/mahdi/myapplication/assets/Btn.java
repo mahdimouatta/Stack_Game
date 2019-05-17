@@ -7,6 +7,7 @@ public class Btn {
     public static Image image;
     public static Image help;
     public static Image repeat;
+    public static Image hand;
     public static AndroidSound helpsound;
 
 

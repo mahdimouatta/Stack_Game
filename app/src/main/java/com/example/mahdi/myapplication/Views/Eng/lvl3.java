@@ -17,11 +17,15 @@ import com.example.mahdi.myapplication.assets.Empty_Box;
 import com.example.mahdi.myapplication.assets.Eng;
 import com.example.mahdi.myapplication.assets.Success;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class lvl3 extends Screen {
 
     private ButtonUI buttonUI;
     private Sprite bg;
     private Sprite success;
+    private Sprite hand;
     private int nbrEssaies=1;
     int x;
     private int help_t =0;
@@ -34,11 +38,13 @@ public class lvl3 extends Screen {
     private BoxDyn boxDyn1;
     private BoxDyn boxDyn2;
     private BoxDyn boxDyn3;
+    private BoxDyn accBox;
 
     private ButtonUI retour;
     private ButtonUI help;
     private ButtonUI repeat;
     int sound = 0;
+    private Timer timer;
 
 
 
@@ -48,6 +54,7 @@ public class lvl3 extends Screen {
         Graphics graphics = game.getGraphics();
 
         retour = new ButtonUI(game, Ar.retour,Ar.retour, graphics.getWidth()/2 +100,graphics.getHeight()/2, 100,100);
+        hand = new ButtonUI(game, Btn.hand,Btn.hand, graphics.getWidth()-170,graphics.getHeight()-370, 100,100);
 
         buttonUI = new ButtonUI(game,Btn.image,Btn.image,graphics.getWidth() - 200,graphics.getHeight() - 180, 150 ,150);
         help = new ButtonUI(game,Btn.help,Btn.help,graphics.getWidth()/2-200,graphics.getHeight()/2, 100 ,100);
@@ -65,7 +72,8 @@ public class lvl3 extends Screen {
         boxDyn1 = new BoxDyn(game,Box.bot,graphics.getWidth()-200,graphics.getHeight()-270,190,190);
         boxDyn2 = new BoxDyn(game,Box.mid,graphics.getWidth()-200,graphics.getHeight()-270,190,190);
         boxDyn3 = new BoxDyn(game,Box.top,graphics.getWidth()-200,graphics.getHeight()-270,190,190);
-
+        accBox = boxDyn1;
+        timer = new Timer();
 
 
         addSprite(boxDyn1);
@@ -102,6 +110,7 @@ public class lvl3 extends Screen {
 
 
         if ( nbrEssaies ==1) { // placement du 1er box
+            accBox = boxDyn1;
             if ( boxDyn1.isDragged()) {
 
                 if (well_placed()==1) {
@@ -118,23 +127,29 @@ public class lvl3 extends Screen {
                     addSprite(boxDyn2);
                     addSprite(boxEmpl2);
                     nbrEssaies = 2;
+                    sound = 1;
 
+
+                }else {
+                    if (sound != 1) {
+                        Eng.tryangain1.play(1);
+                        sound = 1;
+                    }
                 }
             }else {
                 boxDyn1.setY(graphics.getHeight() - 270);
-                if(sound != 1) {
-//                    Ar.tryangain1.play(1);
-                    sound = 1;
-                }
+                sound = 0;
+
             }
 
 //            boxDyn1.setPosition(graphics.getWidth() - 100, graphics.getHeight() - 100);
 
 
         }else if ( nbrEssaies ==2){ // placement du 2e box
+            accBox = boxDyn2;
             if (boxDyn2.isDragged()){
                 if (well_placed()== 2) {
-                    Eng.bien1.play(1);
+                    Eng.bien2.play(1);
 
                     boxDyn2.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn2.setDragged(false);
@@ -147,14 +162,27 @@ public class lvl3 extends Screen {
                     addSprite(boxEmpl3);
 
                     nbrEssaies = 3;
+                    sound = 1;
+
+
+                }else {
+                    if (sound != 1) {
+                        Eng.tryangain2.play(1);
+                        sound = 1;
+                    }
                 }
-            }else boxDyn2.setY(graphics.getHeight() - 270);
+            }else {
+                boxDyn2.setY(graphics.getHeight() - 270);
+                sound = 0;
+
+            }
 //            boxDyn2.setPosition(graphics.getWidth() - 100, graphics.getHeight() - 100);
 
         }else if ( nbrEssaies ==3){ //placement du 3e box
+            accBox = boxDyn3;
             if (boxDyn3.isDragged()) {
                 if (well_placed() == 3) {
-                    Eng.bien1.play(1);
+                    Eng.aplaude.play(1);
                     boxDyn3.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
                     boxDyn3.setDragged(false);
 
@@ -166,8 +194,20 @@ public class lvl3 extends Screen {
 
                     addSprite(boxEmpl3);
                     nbrEssaies = 4;
+                    sound = 1;
+
+
+                }else {
+                    if (sound != 1) {
+                        Eng.proche.play(1);
+                        sound = 1;
+                    }
                 }
-            }else boxDyn3.setY(graphics.getHeight() - 270);
+            }else {
+                boxDyn3.setY(graphics.getHeight() - 270);
+                sound = 0;
+
+            }
 //            boxDyn3.setPosition(graphics.getWidth() - 100, graphics.getHeight() - 100);
         }
 
@@ -189,7 +229,7 @@ public class lvl3 extends Screen {
 //
 //            System.out.println("clicked");
 ////                Screen s = new Lvl2(game);
-////                new MainActivity().getInitScreen(s);
+////                new MainAppActivity().getInitScreen(s);
 //            game.setScreen(new Levels(game));
 //
 //        }
@@ -198,7 +238,7 @@ public class lvl3 extends Screen {
 
             //            System.out.println("clicked");
             //                Screen s = new Lvl2(game);
-            //                new MainActivity().getInitScreen(s);
+            //                new MainAppActivity().getInitScreen(s);
             if(help_t!=1) {
                 game.setScreen(new Levels(game));
                 help_t=1;
@@ -208,8 +248,16 @@ public class lvl3 extends Screen {
 
             //            System.out.println("clicked");
             //                Screen s = new Lvl2(game);
-            //                new MainActivity().getInitScreen(s);
-            Ar.helpsound.play(1);
+            //                new MainAppActivity().getInitScreen(s);
+
+            if(help_t!=1) {
+                hand.setX(accBox.getX()+30);
+                Eng.helpsound.play(1);
+                addSprite(hand);
+                help_t = 1;
+
+                timer.schedule(new RemindTask(),  2*1000);
+            }
 
         }
         if (repeat.isClicked()){
@@ -270,5 +318,24 @@ public class lvl3 extends Screen {
         else if(boxEmpl3.contain(boxDyn3.getX(),boxDyn3.getY())) return 3;
         return 0;
     }
+    private class RemindTask extends TimerTask {
+        public void run() {
+            if (hand.getX()>80){
+
+                hand.setX(hand.getX() - 10);
+                timer.schedule(new RemindTask(),30);
+
+            }else {
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        hand.setX(-500);
+                        help_t = 0;
+                    }
+                }, 5000);
+            }
+        }
+    }
+
 
 }

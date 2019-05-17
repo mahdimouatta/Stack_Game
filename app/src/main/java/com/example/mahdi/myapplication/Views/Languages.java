@@ -68,7 +68,7 @@ public class Languages extends Screen {
 
 //            System.out.println("clicked");
 //                Screen s = new Lvl2(game);
-//                new MainActivity().getInitScreen(s);
+//                new MainAppActivity().getInitScreen(s);
             game.setScreen(new Levels(game));
 
         }
@@ -76,7 +76,7 @@ public class Languages extends Screen {
 
 //            System.out.println("clicked");
 //                Screen s = new Lvl2(game);
-//                new MainActivity().getInitScreen(s);
+//                new MainAppActivity().getInitScreen(s);
             game.setScreen(new com.example.mahdi.myapplication.Views.Fr.Levels(game));
 
         }
@@ -84,7 +84,7 @@ public class Languages extends Screen {
 
 //            System.out.println("clicked");
 //                Screen s = new Lvl2(game);
-//                new MainActivity().getInitScreen(s);
+//                new MainAppActivity().getInitScreen(s);
             game.setScreen(new com.example.mahdi.myapplication.Views.Eng.Levels(game));
 
         }

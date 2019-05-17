@@ -1,7 +1,9 @@
 package com.example.mahdi.myapplication;
 
+import android.media.MediaPlayer;
 import android.util.Log;
 
+import com.e_mobadara.audiomanaging.moblibAudioFileManager;
 import com.example.emobadaragaminglib.Base.Graphics;
 import com.example.emobadaragaminglib.Base.Screen;
 import com.example.emobadaragaminglib.Implementation.AndroidGame;
@@ -15,7 +17,10 @@ import com.example.mahdi.myapplication.assets.Eng;
 import com.example.mahdi.myapplication.assets.Fr;
 import com.example.mahdi.myapplication.assets.Success;
 
-public class MainActivity extends AndroidGame {
+public class MainAppActivity extends AndroidGame {
+
+    public static MediaPlayer Losingsound;
+    public static MediaPlayer Winningsound;
 
     @Override
     public Screen getInitScreen() {
@@ -56,6 +61,7 @@ public class MainActivity extends AndroidGame {
 
         Btn.image = getGraphics().newImage(R.drawable.btn,Graphics.ImageFormat.ARGB8888,getResources());
         Btn.repeat = getGraphics().newImage(R.mipmap.repeat,Graphics.ImageFormat.ARGB8888,getResources());
+        Btn.hand = getGraphics().newImage(R.mipmap.hand,Graphics.ImageFormat.ARGB8888,getResources());
 
 
 
@@ -69,8 +75,11 @@ public class MainActivity extends AndroidGame {
         Ar.aplaude = (AndroidSound)getAudio().createSound(R.raw.applaud);
         Ar.proche = (AndroidSound)getAudio().createSound(R.raw.prochear);
         Ar.tryangain1 = (AndroidSound)getAudio().createSound(R.raw.soundar2);
-        Ar.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.soundar3);
+        Ar.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.essayear);
         Ar.bien1 = (AndroidSound)getAudio().createSound(R.raw.sonar);
+        Ar.bien2 = (AndroidSound)getAudio().createSound(R.raw.sonar2);
+        Ar.bien3 = (AndroidSound)getAudio().createSound(R.raw.son3ar);
+
 
 
         Fr.langue = getGraphics().newImage(R.mipmap.doorifr,Graphics.ImageFormat.ARGB8888,getResources());
@@ -80,12 +89,14 @@ public class MainActivity extends AndroidGame {
         Fr.lvl1 = getGraphics().newImage(R.mipmap.lvl1icon,Graphics.ImageFormat.ARGB8888,getResources());
         Fr.lvl2 = getGraphics().newImage(R.mipmap.lvl2icon,Graphics.ImageFormat.ARGB8888,getResources());
         Fr.retour = getGraphics().newImage(R.mipmap.retour,Graphics.ImageFormat.ARGB8888,getResources());
-        Fr.helpsound = (AndroidSound)getAudio().createSound(R.raw.yasmine);
+        Fr.helpsound = (AndroidSound)getAudio().createSound(R.raw.helpf);
         Fr.aplaude = (AndroidSound)getAudio().createSound(R.raw.applaud);
-        Fr.proche = (AndroidSound)getAudio().createSound(R.raw.prochear);
-        Fr.tryangain1 = (AndroidSound)getAudio().createSound(R.raw.soundar2);
-        Fr.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.soundar3);
-        Fr.bien1 = (AndroidSound)getAudio().createSound(R.raw.sonar);
+        Fr.proche = (AndroidSound)getAudio().createSound(R.raw.proche);
+        Fr.tryangain1 = (AndroidSound)getAudio().createSound(R.raw.essayerencore);
+        Fr.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.proche);
+        Fr.bien1 = (AndroidSound)getAudio().createSound(R.raw.son1fr);
+        Fr.bien2 = (AndroidSound)getAudio().createSound(R.raw.son2fr);
+        Fr.bien3 = (AndroidSound)getAudio().createSound(R.raw.son3fr);
 
 
 
@@ -97,18 +108,19 @@ public class MainActivity extends AndroidGame {
         Eng.lvls = getGraphics().newImage(R.mipmap.lvlseng,Graphics.ImageFormat.ARGB8888,getResources());
 
         Eng.retour = getGraphics().newImage(R.mipmap.retour,Graphics.ImageFormat.ARGB8888,getResources());
-        Eng.helpsound = (AndroidSound)getAudio().createSound(R.raw.yasmine);
+        Eng.helpsound = (AndroidSound)getAudio().createSound(R.raw.helpan);
         Eng.aplaude = (AndroidSound)getAudio().createSound(R.raw.applaud);
-        Eng.proche = (AndroidSound)getAudio().createSound(R.raw.prochear);
-        Eng.tryangain1 = (AndroidSound)getAudio().createSound(R.raw.soundar2);
-        Eng.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.soundar3);
-        Eng.bien1 = (AndroidSound)getAudio().createSound(R.raw.sonar);
+        Eng.proche = (AndroidSound)getAudio().createSound(R.raw.urclose);
+        Eng.tryangain1 = (AndroidSound)getAudio().createSound(R.raw.tryagain);
+        Eng.tryangain2 = (AndroidSound)getAudio().createSound(R.raw.urclose);
+        Eng.bien1 = (AndroidSound)getAudio().createSound(R.raw.son1ang);
+        Eng.bien2 = (AndroidSound)getAudio().createSound(R.raw.son2ang);
+        Eng.bien3 = (AndroidSound)getAudio().createSound(R.raw.son3ang);
 
 
 
 
 
-        Box.voice =(AndroidSound)getAudio().createSound(R.raw.show_me);
 
 
         // help
@@ -122,6 +134,9 @@ public class MainActivity extends AndroidGame {
 
         Btn.play = getGraphics().newImage(R.mipmap.play,Graphics.ImageFormat.ARGB8888,getResources());
         Btn.playClick = getGraphics().newImage(R.mipmap.playclicked,Graphics.ImageFormat.ARGB8888,getResources());
+
+        Losingsound = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","AR");
+        Winningsound = moblibAudioFileManager.getRandomAudioFile(this,"good","AR");
 
 
 

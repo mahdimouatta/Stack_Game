@@ -39,7 +39,7 @@ public class Levels extends Screen {
 
 //            System.out.println("clicked");
 //                Screen s = new Lvl2(game);
-//                new MainActivity().getInitScreen(s);
+//                new MainAppActivity().getInitScreen(s);
             game.setScreen(new Lvl2(game));
 
         }
@@ -47,7 +47,7 @@ public class Levels extends Screen {
 
 //            System.out.println("clicked");
 //                Screen s = new Lvl2(game);
-//                new MainActivity().getInitScreen(s);
+//                new MainAppActivity().getInitScreen(s);
             game.setScreen(new lvl3(game));
 
         }
@@ -55,7 +55,7 @@ public class Levels extends Screen {
 //
 ////            System.out.println("clicked");
 ////                Screen s = new Lvl2(game);
-////                new MainActivity().getInitScreen(s);
+////                new MainAppActivity().getInitScreen(s);
 //            game.setScreen(new Lvl3(game));
 //
 //        }
@@ -65,7 +65,7 @@ public class Levels extends Screen {
 
 //            System.out.println("clicked");
 //                Screen s = new Lvl2(game);
-//                new MainActivity().getInitScreen(s);
+//                new MainAppActivity().getInitScreen(s);
             game.setScreen(new Languages(game));
 
         }

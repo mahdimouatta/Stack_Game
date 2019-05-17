@@ -19,6 +19,7 @@ public class Eng {
     public static AndroidSound aplaude;
     public static AndroidSound bien1;
     public static AndroidSound bien2;
+    public static AndroidSound bien3;
     public static AndroidSound tryangain1;
     public static AndroidSound tryangain2;
     public static AndroidSound proche;

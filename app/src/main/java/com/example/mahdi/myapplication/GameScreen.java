@@ -34,7 +34,7 @@ public class GameScreen extends Screen {
 
 //            System.out.println("clicked");
 //                Screen s = new Lvl2(game);
-//                new MainActivity().getInitScreen(s);
+//                new MainAppActivity().getInitScreen(s);
 
         }
     }
