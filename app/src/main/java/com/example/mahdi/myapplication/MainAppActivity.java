@@ -2,12 +2,13 @@ package com.example.mahdi.myapplication;
 
 import android.arch.core.util.Function;
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.text.TextUtils;
 import android.util.Log;
 
-import com.e_mobadara.audiomanaging.MainActivity;
 import com.e_mobadara.audiomanaging.moblibAudioFileManager;
 import com.example.emobadaragaminglib.Base.Game;
 import com.example.emobadaragaminglib.Base.Graphics;
@@ -25,16 +26,69 @@ import com.example.mahdi.myapplication.assets.Eng;
 import com.example.mahdi.myapplication.assets.Fr;
 import com.example.mahdi.myapplication.assets.Success;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainAppActivity extends AndroidGame {
 
-    public static MediaPlayer Losingsound;
-    public static MediaPlayer Winningsound;
-    public static int waiting = 3000;
 
-    public static void saveState(Context context,String lvl, int succ, int fail){
+
+
+    public static int waiting = 3000;
+    public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    private static Date date =new Date();
+    private static String created_at = dateFormat.format(date);
+    public static Date dateDebut;
+    public static Date datefin;
+
+    public static String times[] = new String[3];
+
+
+    public static void viderTimes(){
+        for (int i =0;i<3;i++)
+            times[i]="0";
+    }
+
+    public static String getDiffDates(Date d,Date end){
+        DecimalFormat decimalFormat = new DecimalFormat("###,###");
+        String diff = decimalFormat.format(end.getSeconds() - d.getSeconds());
+        return diff;
+    }
+
+    public static String getMinTime(String[] ts){
+        String min = "60000";
+        for(String a : ts){
+            if (!TextUtils.isEmpty(a) && TextUtils.isDigitsOnly(a)){
+                if (Integer.parseInt(min)>Integer.parseInt(a)) {
+                    min = a;
+                }
+            }
+        }
+        return min;
+    }
+
+    public static String getAvgTime(String[] ts){
+        int avg = 0;
+        int i =0;
+        for(String a : ts) {
+            if (!TextUtils.isEmpty(a) && TextUtils.isDigitsOnly(a)) {
+                i++;
+                avg += Integer.parseInt(a);
+
+            }
+        }
+        avg/=i;
+        return avg+"";
+    }
+
+    public static void saveState(Context context,String lvl, int succ, int fail, String updated_at){
         GameStat gameStat = new GameStat();
 
         String application_id = "2019_3_2_3";
@@ -43,12 +97,24 @@ public class MainAppActivity extends AndroidGame {
         String exercice_id = "T_5_1";
         gameStat.setExercise_id(exercice_id);
 
+
+        gameStat.setCreated_at(created_at);
+
+        gameStat.setUpdated_at(updated_at);
+
+        gameStat.setMin_time_succeed_sec(getMinTime(times));
+
+        gameStat.setAvg_time_succeed_sec(getAvgTime(times));
+
+
         gameStat.setLevel_id(lvl);
 
         gameStat.setSuccessful_attempts(String.valueOf(succ));
 
         gameStat.setFailed_attempts(String.valueOf(fail));
         FoxyAuth.storeGameStat(context,gameStat);
+
+        viderTimes();
 
     }
 
@@ -64,6 +130,9 @@ public class MainAppActivity extends AndroidGame {
     }
     @Override
     public Screen getInitScreen() {
+
+//        date = new Date();
+
 
         Success.avatar = getGraphics().newImage(R.drawable.success,Graphics.ImageFormat.ARGB8888,getResources());
         BG.languebg = getGraphics().newImage(R.mipmap.languages,Graphics.ImageFormat.ARGB8888,getResources());
@@ -195,10 +264,11 @@ public class MainAppActivity extends AndroidGame {
 
 
         Btn.play = getGraphics().newImage(R.mipmap.play,Graphics.ImageFormat.ARGB8888,getResources());
+        Btn.audioConf = getGraphics().newImage(R.mipmap.audioconf,Graphics.ImageFormat.ARGB8888,getResources());
+        Btn.audioPlus = getGraphics().newImage(R.mipmap.audioplus,Graphics.ImageFormat.ARGB8888,getResources());
+        Btn.audioMinus = getGraphics().newImage(R.mipmap.audiominus,Graphics.ImageFormat.ARGB8888,getResources());
         Btn.playClick = getGraphics().newImage(R.mipmap.playclicked,Graphics.ImageFormat.ARGB8888,getResources());
 
-        Losingsound = moblibAudioFileManager.getRandomAudioFile(this,"encouragement","AR");
-        Winningsound = moblibAudioFileManager.getRandomAudioFile(this,"good","AR");
 
 
 

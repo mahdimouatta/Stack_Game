@@ -1,6 +1,7 @@
 package com.example.mahdi.myapplication.Views.Ar;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.util.Log;
 
 import com.example.emobadaragaminglib.Base.Game;
@@ -8,6 +9,7 @@ import com.example.emobadaragaminglib.Base.Graphics;
 import com.example.emobadaragaminglib.Base.Screen;
 import com.example.emobadaragaminglib.Components.ButtonUI;
 import com.example.emobadaragaminglib.Components.Sprite;
+import com.example.mahdi.myapplication.MainAppActivity;
 import com.example.mahdi.myapplication.Sprites.BoxDyn;
 import com.example.mahdi.myapplication.Sprites.BoxEmpl;
 import com.example.mahdi.myapplication.assets.Ar;
@@ -17,6 +19,7 @@ import com.example.mahdi.myapplication.assets.Btn;
 import com.example.mahdi.myapplication.assets.Empty_Box;
 import com.example.mahdi.myapplication.assets.Success;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,17 +50,23 @@ public class lvl3 extends Screen {
     private ButtonUI repeat;
     int sound = 0;
     private Timer timer;
-    private String lvl = "Ar: Lvl2";
+    private String lvl = "2";
     private int succ=0;
     private int fail=0;
 
+    private ButtonUI reduireV;
+    private ButtonUI ajouterV;
+    int s = 0; // controller le volume
 
 
+    private AudioManager audioManager;
 
 
     public lvl3(Game game) {
         super(game);
         Graphics graphics = game.getGraphics();
+
+        audioManager = (AudioManager) ((Context) game).getSystemService(Context.AUDIO_SERVICE);
 
         retour = new ButtonUI(game, Ar.retour,Ar.retour, graphics.getWidth()/2 +100,graphics.getHeight()/2, 100,100);
         hand = new ButtonUI(game, Btn.hand,Btn.hand, graphics.getWidth()-170,graphics.getHeight()-300, 100,100);
@@ -81,6 +90,13 @@ public class lvl3 extends Screen {
         accBox = boxDyn1;
         timer = new Timer();
 
+
+        reduireV = new ButtonUI(game,Btn.audioMinus,Btn.audioMinus, 110,0, 80,80);
+        ajouterV = new ButtonUI(game, Btn.audioPlus,Btn.audioPlus, 20,0, 80,80);
+
+
+        addSprite(reduireV);
+        addSprite(ajouterV);
 
 
         addSprite(boxDyn1);
@@ -122,6 +138,11 @@ public class lvl3 extends Screen {
 
                 if (well_placed()==1) {
                     succ++;
+                    MainAppActivity.datefin = new Date();
+
+                    MainAppActivity.times[0] = MainAppActivity.getDiffDates(MainAppActivity.dateDebut,MainAppActivity.datefin);
+
+                    MainAppActivity.dateDebut = new Date();
                     if ( Ar.tryangain1.isPlaying()) Ar.tryangain1.pause();
                     Ar.bien1.start();
                     boxDyn1.setPosition(graphics.getWidth()*2,graphics.getHeight()*2);
@@ -163,6 +184,11 @@ public class lvl3 extends Screen {
             if (boxDyn2.isDragged()){
                 if (well_placed()== 2) {
                     succ++;
+                    MainAppActivity.datefin = new Date();
+
+                    MainAppActivity.times[1] = MainAppActivity.getDiffDates(MainAppActivity.dateDebut,MainAppActivity.datefin);
+
+                    MainAppActivity.dateDebut = new Date();
                     if ( Ar.tryangain2.isPlaying()) Ar.tryangain2.pause();
                     Ar.bien2.start();
 
@@ -202,6 +228,11 @@ public class lvl3 extends Screen {
             if (boxDyn3.isDragged()) {
                 if (well_placed() == 3) {
                     succ++;
+                    MainAppActivity.datefin = new Date();
+
+                    MainAppActivity.times[2] = MainAppActivity.getDiffDates(MainAppActivity.dateDebut,MainAppActivity.datefin);
+
+                    MainAppActivity.dateDebut = new Date();
                     if ( Ar.proche.isPlaying()) Ar.proche.pause();
                     Ar.aplaude.start();
 
@@ -266,7 +297,7 @@ public class lvl3 extends Screen {
             //                Screen s = new Lvl2(game);
             //                new MainAppActivity().getInitScreen(s);
             if(help_t!=1) {
-                saveState((Context)game ,lvl,succ,fail);
+                saveState((Context)game ,lvl,succ,fail,MainAppActivity.dateFormat.format(new Date()));
                 game.setScreen(new Levels(game));
                 help_t=1;
             }
@@ -288,6 +319,19 @@ public class lvl3 extends Screen {
         if (repeat.isClicked()){
             game.setScreen(new lvl3(game));
         }
+        if (ajouterV.isClicked()) {
+            if(s==0) {
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+                s=1;
+            }
+        }
+
+        if (reduireV.isClicked()) {
+            if(s==0) {
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+                s=1;
+            }
+        }
 
 
 
@@ -300,6 +344,8 @@ public class lvl3 extends Screen {
         retour.onTouchDown(x,y);
         repeat.onTouchDown(x,y);
         help.onTouchDown(x,y);
+        ajouterV.onTouchDown(x,y);
+        reduireV.onTouchDown(x,y);
     }
 
     @Override
@@ -309,6 +355,9 @@ public class lvl3 extends Screen {
         retour.onTouchUp(x,y);
         repeat.onTouchUp(x,y);
         help.onTouchUp(x,y);
+        ajouterV.onTouchUp(x,y);
+        reduireV.onTouchUp(x,y);
+        s=0;
 
 
 
@@ -328,13 +377,13 @@ public class lvl3 extends Screen {
 
     @Override
     public void backButton() {
-        saveState((Context)game ,lvl,succ,fail);
+        saveState((Context)game ,lvl,succ,fail,MainAppActivity.dateFormat.format(new Date()));
         game.setScreen(new Levels(game));
 
     }
     @Override
     public void dispose() {
-        saveState((Context)game ,lvl,succ,fail);
+        saveState((Context)game ,lvl,succ,fail,MainAppActivity.dateFormat.format(new Date()));
         super.dispose();
 
     }

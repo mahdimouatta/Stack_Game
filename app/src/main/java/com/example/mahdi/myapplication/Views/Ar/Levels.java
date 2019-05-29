@@ -23,8 +23,6 @@ public class Levels extends Screen {
         lvl2 = new ButtonUI(game, Ar.lvl2,Ar.lvl2, graphics.getWidth()*5/8,graphics.getHeight()*2/5, graphics.getHeight()/4,graphics.getWidth()/4);
         retour = new ButtonUI(game, Ar.retour,Ar.retour, graphics.getWidth()*7/8,50, 100,100);
 
-
-
         addSprite(lvl1);
         addSprite(lvl2);
         addSprite(retour);
