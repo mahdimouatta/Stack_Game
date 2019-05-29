@@ -15,7 +15,9 @@ public class Loading extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
-//        FoxyAuth.emerge(this,MainAppActivity.class);
+        FoxyAuth.emerge(this,MainAppActivity.class);
+
+
     }
 
 

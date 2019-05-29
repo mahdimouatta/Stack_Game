@@ -312,7 +312,6 @@ public class Lvl2 extends Screen {
             //                Screen s = new Lvl2(game);
             //                new MainAppActivity().getInitScreen(s);
             if(help_t!=1) {
-                Log.i("an",MainAppActivity.times[0]);
                 saveState((Context)game ,lvl,succ,fail,MainAppActivity.dateFormat.format(new Date()));
                 game.setScreen(new Levels(game));
                 help_t=1;
